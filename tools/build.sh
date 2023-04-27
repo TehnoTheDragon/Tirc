@@ -1,5 +1,5 @@
 $BUILD_DIR = "./build/"
-if [ -d "$BUILD_DIR" ] then
+if [ -d "$BUILD_DIR" ]; then
     mkdir build
 fi
 cmake -S . -B ./build/
