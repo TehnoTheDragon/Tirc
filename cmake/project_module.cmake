@@ -11,6 +11,10 @@ function(AddSource ProjectName)
     add_executable(${ProjectName} ${_SOURCE})
 endfunction(AddSource)
 
+macro(IncludeDirs)
+    target_include_directories(${ARGV})
+endmacro(IncludeDirs)
+
 function(ProjectProperty ProjectName Property Value)
     set_property(TARGET ${ProjectName} PROPERTY ${Property} ${Value})
 endfunction(ProjectProperty)
