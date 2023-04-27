@@ -12,5 +12,5 @@ function(AddSource ProjectName)
 endfunction(AddSource)
 
 function(ProjectProperty ProjectName Property Value)
-    set_property(${ProjectName} PROPERTY ${Property} ${Value})
+    set_property(TARGET ${ProjectName} PROPERTY ${Property} ${Value})
 endfunction(ProjectProperty)
