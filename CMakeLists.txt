@@ -5,6 +5,6 @@ project(NO_SENSE_NO_LANGUAGE_NO_ERRORS_BYEEEE LANGUAGES NONE)
 include(cmake/project_module.cmake)
 
 # Projects
-NewProject(TCIR CXX 0.1.0)
-AddSource(TCIR "src/**.cpp")
-ProjectProperty(TCIR CXX_STANDARD 11)
+NewProject(TIRC CXX 0.1.0)
+AddSource(TIRC "src/**.cpp")
+ProjectProperty(TIRC CXX_STANDARD 11)
