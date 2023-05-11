@@ -1,2 +1,6 @@
-# Ignore Those
+# IDE
+.vscode
+.vs
+
+# Build
 build
