@@ -111,4 +111,4 @@ call @my_function
 ```
 
 ### Macro
-- Macro is a big topic, read about it [here]("MACRO.md")
+- Macro is a big topic, read about it [here](MACRO.md)
