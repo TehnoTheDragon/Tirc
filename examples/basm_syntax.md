@@ -12,6 +12,10 @@
 - We can `push` and `pop` our stack. To push value onto the stack we write `push 10` or `push %x`, if we need get value back or just remove from top, we write `pop %x` and this write value into `VR %x` or just a `pop` to remove value
 - We can use `call` to return back to address where the call was called, we can do it like this `call @our_function`, syntax is similar to `jump`. Use keyword `ret` to return back
 - More about "functions", we can write a function two ways "complex" and "neat", both that way has pros and cons. Recomendation use "neat" style if it is not complex "function", because it is hard to debug in "neat" style
+- We can do bitwise operations, they are similar to math operations, it is supports: AND, OR, XOR, NAND, NOR, NOT; The syntax looks like this `%x & %y`, `%x | %y`, `%x ^ %y`, `%x ~& %y`, `%x ~| %y`, `~%x`.
+- We can perform conditional jumps, after keyword `jump` and destination we put a condition like this `jump @loop %x >= 10`, it's supports such conditions: `==`, `~=`, `~`, `>`, `>=`, `<`, `<=`
+- We can store and load data from the memory, to store our value in the memory we do `store %y %x`, we save pointer to our value in `VR %y`, `VR %x` is our value. To load our value we do `load %y %x`, we load value into `VR %x` by address stored in `VR %y`. There is also more complex version of store and load, `store $0x01F %x`, `load $0x01F %x` we can use `$` to explicitly say the address where we want to store or load from.
+- We can use preprocessors to make it possible to write `basm` for different architectures, preprocessors are starts from `#` It is could looks like it is a comment but if you don't put space between `#` and preprocessor command.
 # Examples
 ## Basic Sum Function ("Complex")
 ```basm
@@ -37,4 +41,29 @@ pop %x
 %a = 10
 %x = call @sum_two_values(%a, 5)
 ```
-# Redesign
+# BASM CLI
+## Commands
+- `emit`
+## Arguments
+- `-source <file(s)>` it means we want to include `<file(s)>` into our current command
+- `-out <file>` it will create file with a name we provide and put content into it.
+- `-asm` it need to specify assembler we want to emit to
+## Preprocessor
+- We can set values to our preprocessors before emit sources, `--MY_VALUE=10`, it will create definition `MY_VALUE` with a value `10`
+## Examples
+### Just an emit
+`basm emit -source main.basm -out main.asm -asm x86_64-intel`
+
+# Syntax
+## Keywords
+### Manipulate Stack
+- `push <value>`
+- `pop <destination?>`
+### Control-flow
+- `jump <@address>`
+- `call <@address>` or `call <@address>(<arguments?>)`
+- `halt`
+### I/O
+- `interrupt <const-value>`
+- `in <port-value> <value> <size-in-bytes?>`
+- `out <port-value> <destination> <size-in-bytes?>`
