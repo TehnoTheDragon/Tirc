@@ -2,6 +2,7 @@
 - `VR` - Virtual Register (not physical register), used to easier read an assembly code and optimize it.
 - `Neat Style` - basm with quality of life features like neat way to write "functions" (better for read)
 - `Complex Style` - basm withouth quality of life features (better for debug)
+
 # Guide
 - We can set a value to our registers like this `%x = 10`, the `x` is a virtual register and not physical, it is used to easier understand assembly code, and to optimize it if need to.
 - We can do basic math operations with our registers, it is supports: summation, subtraction, division, multiplying and module, the syntax looks like `%x + 1`, `%x - 1`, `%x / 1`, `%x * 1`, `%x % 1`, in this case result will be written into our `VR %x`, we can also get our result into another `VR` like this `%result = %x + 1`, in this case result will be written in our `VR %result`.
@@ -16,6 +17,8 @@
 - We can perform conditional jumps, after keyword `jump` and destination we put a condition like this `jump @loop %x >= 10`, it's supports such conditions: `==`, `~=`, `~`, `>`, `>=`, `<`, `<=`
 - We can store and load data from the memory, to store our value in the memory we do `store %y %x`, we save pointer to our value in `VR %y`, `VR %x` is our value. To load our value we do `load %y %x`, we load value into `VR %x` by address stored in `VR %y`. There is also more complex version of store and load, `store $0x01F %x`, `load $0x01F %x` we can use `$` to explicitly say the address where we want to store or load from.
 - We can use preprocessors to make it possible to write `basm` for different architectures, preprocessors are starts from `#` It is could looks like it is a comment but if you don't put space between `#` and preprocessor command.
+- More about bitwise operations, we can use `>>` and `<<` to shift values right and left, for example: `%x = 0xF0` `%x >> 1` now `%x` is `0x0F`
+- We can create a sections same way as in real assembler, just add `section` keyword before declare label
 # Examples
 ## Basic Sum Function ("Complex")
 ```basm
@@ -41,6 +44,19 @@ pop %x
 %a = 10
 %x = call @sum_two_values(%a, 5)
 ```
+## Preprocessor Example
+`basm emit -source main.basm -out main.asm -asm x86_64 --SUPER_FEATURE`
+```basm
+#if defined(SUPER_FEATURE)
+    &SUPER_FEATURE_DEFINITION 1
+#else
+    &SUPER_FEATURE_DEFINITION 0
+#end
+
+#if SUPER_FEATURE_DEFINITION == 1
+    # Something happening here...
+#end
+```
 
 # Syntax
 ## Keywords
@@ -60,6 +76,7 @@ pop %x
 ## Commands
 - `help` - give a list of commands to provide basic information to start work with.
 - `emit` - emitting sources into real assembler code which can be compiled with tools like `nasm` `fasm` `masm` and etc.
+- `asm-list` - provide a list of supported assemblers to emit to
 ## Arguments
 - `-source <file(s)>` it means we want to include `<file(s)>` into our current command
 - `-out <file>` it will create file with a name we provide and put content into it.
@@ -68,4 +85,6 @@ pop %x
 - We can set values to our preprocessors before emit sources, `--MY_VALUE=10`, it will create definition `MY_VALUE` with a value `10`
 ## Examples
 ### Just an emit
-`basm emit -source main.basm -out main.asm -asm x86_64-intel`
+`basm emit -source main.basm -out main.asm -asm x86_64`
+### Set a definitions
+`basm emit -source main.basm -out main.asm -asm x86_64 --MY_VALUE=10 --MY_FLAG --SUPER_FEATURE=Enable`
