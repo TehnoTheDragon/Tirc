@@ -41,18 +41,6 @@ pop %x
 %a = 10
 %x = call @sum_two_values(%a, 5)
 ```
-# BASM CLI
-## Commands
-- `emit`
-## Arguments
-- `-source <file(s)>` it means we want to include `<file(s)>` into our current command
-- `-out <file>` it will create file with a name we provide and put content into it.
-- `-asm` it need to specify assembler we want to emit to
-## Preprocessor
-- We can set values to our preprocessors before emit sources, `--MY_VALUE=10`, it will create definition `MY_VALUE` with a value `10`
-## Examples
-### Just an emit
-`basm emit -source main.basm -out main.asm -asm x86_64-intel`
 
 # Syntax
 ## Keywords
@@ -67,3 +55,17 @@ pop %x
 - `interrupt <const-value>`
 - `in <port-value> <value> <size-in-bytes?>`
 - `out <port-value> <destination> <size-in-bytes?>`
+
+# BASM CLI
+## Commands
+- `help` - give a list of commands to provide basic information to start work with.
+- `emit` - emitting sources into real assembler code which can be compiled with tools like `nasm` `fasm` `masm` and etc.
+## Arguments
+- `-source <file(s)>` it means we want to include `<file(s)>` into our current command
+- `-out <file>` it will create file with a name we provide and put content into it.
+- `-asm` it need to specify assembler we want to emit to
+## Preprocessor
+- We can set values to our preprocessors before emit sources, `--MY_VALUE=10`, it will create definition `MY_VALUE` with a value `10`
+## Examples
+### Just an emit
+`basm emit -source main.basm -out main.asm -asm x86_64-intel`
