@@ -1,6 +1,6 @@
 #include "lexer/lexer.hpp"
 
-namespace tirc {
+namespace basm {
     namespace lexer {
         LexiconSnapshot::LexiconSnapshot(const std::regex& regex, const std::string& source) :
             buffer(source),

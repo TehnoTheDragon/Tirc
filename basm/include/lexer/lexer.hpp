@@ -3,7 +3,7 @@
 #include <regex>
 #include "token.hpp"
 
-namespace tirc {
+namespace basm {
     namespace lexer {
         struct LexiconSnapshot {
             const std::string buffer;

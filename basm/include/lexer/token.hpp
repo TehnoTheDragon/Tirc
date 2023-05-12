@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace tirc {
+namespace basm {
     namespace lexer {
         struct Token {
             size_t position = 0;
