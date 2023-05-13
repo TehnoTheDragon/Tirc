@@ -17,10 +17,13 @@ namespace basm {
         class Lexer final {
         private:
             const std::vector<std::pair<unsigned long, std::string>> _ruleset;
+            std::regex _regexRules;
             LexiconSnapshot* _snapshot = nullptr;
         public:
-            Lexer(const std::vector<std::pair<unsigned long, std::string>>& ruleset, const std::string& source);
+            Lexer(const std::vector<std::pair<unsigned long, std::string>>& ruleset);
             ~Lexer();
+
+            void begin(const std::string& source);
 
             Token next();
         };
