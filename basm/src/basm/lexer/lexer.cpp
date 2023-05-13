@@ -1,4 +1,4 @@
-#include "lexer/lexer.hpp"
+#include "basm/lexer/lexer.hpp"
 
 namespace basm {
     namespace lexer {
@@ -10,7 +10,7 @@ namespace basm {
             this->end = std::sregex_iterator(buffer.end(), buffer.end(), this->regex);    
         }
 
-        Lexer::Lexer(const std::vector<std::pair<unsigned long, std::string>>& ruleset, const std::string& source) :
+        Lexer::Lexer(const std::vector<std::pair<unsigned long, std::string>>& ruleset) :
             _ruleset(ruleset)
         {
             std::string combinedRules;
@@ -22,11 +22,14 @@ namespace basm {
                 if (index++ < ruleset.size() - 1)
                     combinedRules += "|";
             }
-
-            _snapshot = new LexiconSnapshot(std::regex(combinedRules), source);
+            this->_regexRules = std::regex(combinedRules);
         }
 
         Lexer::~Lexer() {}
+
+        void Lexer::begin(const std::string& source) {
+            _snapshot = new LexiconSnapshot(this->_regexRules, source);
+        }
 
         Token Lexer::next() {
             if (_snapshot->itr == _snapshot->end)
