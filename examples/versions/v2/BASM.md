@@ -16,7 +16,6 @@ section @text {
     # A Program goes here...
 }
 ```
-- `{` and `}` are optional, they need just to make your assembler code understandable for new developers or just make "begin and end" of something more visible
 ### Labels
 ```basm
 @jump_here: {
