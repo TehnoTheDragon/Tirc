@@ -16,7 +16,7 @@ push type value
 
 myPush(i32, 10) # push i32 10
 ```
-### Arrays and Iteration
+### "Arrays" and Iteration
 ```basm
 macro pushMultiple (type, values) {
     for value in values {
