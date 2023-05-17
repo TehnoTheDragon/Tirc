@@ -1,17 +1,15 @@
 #include <iostream>
-#include <basm/parser/basm/basm_parser.hpp>
+#include <basm/parser/basm/basm_ast.hpp>
+//#include <basm/emitter/target/x86_64/x86_64_emitter.hpp>
 
 int main() {
-    try {
-        basm::BasmParser basmParser(R"(
-            @begin: {
-                jump @begin
-            }
-        )");
-        basm::BasmAST* root = basmParser.parse();
-    } catch(const std::exception& e) {
-        std::cerr << e.what() << '\n';
-    }
+    // auto x86_64Emitter = basm::emitter::x86_64Emitter(R"(
+    //     section @.data;
+    //     global @entry;
+    //     @entry:
+    //         jump @entry;
+    // )");
+    // std::cout << x86_64Emitter.str() << std::endl;
 
     return 0;
 }
