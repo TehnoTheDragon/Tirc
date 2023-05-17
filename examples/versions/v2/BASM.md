@@ -9,10 +9,10 @@
 ## Low-Level
 ### Sections
 ```basm
-section @data {
+section @.data: {
     # Data goes here...
 }
-section @text {
+section @.text: {
     # A Program goes here...
 }
 ```
