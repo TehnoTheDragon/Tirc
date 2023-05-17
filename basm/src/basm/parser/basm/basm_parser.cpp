@@ -5,14 +5,14 @@
 #pragma warning (disable: 4996)
 
 #define THROW_ERROR(message, ...)\
-    char* buffer = new char[1024];\
+    char* buffer = new char[2048];\
     sprintf(buffer, message, __VA_ARGS__);\
     throw std::exception(buffer);
 
 namespace basm {
     namespace details {
         enum BasmTokenType {
-            KEYWORD = 1, PREPROCESSOR, COMMENT, REGISTER, VARIABLE, LABEL,
+            KEYWORD = 1, PREPROCESSOR, COMMENT, LABEL, REGISTER, VARIABLE,
             SYMBOL, MATH_SIGN, BITWISE_SIGN, DATATYPE,
             STRING, NUMBER
         };
@@ -29,7 +29,7 @@ namespace basm {
 
             {BasmTokenType::MATH_SIGN, "(\\+|\\-|\\/|\\*|\\%)"},
             {BasmTokenType::BITWISE_SIGN, "(\\~|\\&|\\||\\^|\\~\\&|\\~\\|)"},
-            {BasmTokenType::SYMBOL, "(\\:|\\{|\\}|\\(|\\)|\\<|\\>)"},
+            {BasmTokenType::SYMBOL, "(\\:|\\;|\\{|\\}|\\(|\\)|\\<|\\>)"},
 
             {BasmTokenType::DATATYPE, "(i8|i16|i32|i64|i128|b1|b2|b4|b8|b16|f16|f32|f64|f128|f256|f512)"},
 
@@ -71,20 +71,30 @@ namespace basm {
 
     void BasmParser::advance() {
         this->_pos++;
+        if (this->_pos >= this->_tokens.size())
+            return;
         this->_prevToken = this->_token;
-        this->_token = this->_tokens[this->_pos];
+        this->_token = this->_tokens.at(this->_pos);
     }
 
-    BasmAST* BasmParser::parse() {
-        while (this->_pos != this->_tokens.size()) {
-            
+    bool BasmParser::advance_if(const std::string& data) {
+        if (expect(data)) {
+            advance();
+            return true;
         }
-
-        return this->_root;
+        return false;
     }
 
-    BasmAST* BasmParser::parse_keyword() {
-        return new BasmAST(BasmASTType::NONE);
+    bool BasmParser::advance_if(unsigned long type) {
+        if (expect(type)) {
+            advance();
+            return true;
+        }
+        return false;
+    }
+
+    void BasmParser::skip_aesthetic_if(const std::string& data) {
+        advance_if(data);
     }
 }
 
