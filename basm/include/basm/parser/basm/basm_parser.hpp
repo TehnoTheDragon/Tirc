@@ -10,11 +10,9 @@ namespace basm {
         lexer::Token _token;
         lexer::Token _prevToken;
         size_t _pos = 0;
-
-        BasmAST* _root = nullptr;
     public:
         BasmParser(const std::string& source);
-        BasmAST* parse();
+        BAST parse();
 
     private:
         void require(const std::string& data);
@@ -23,6 +21,8 @@ namespace basm {
         bool expect(unsigned long type);
         void advance();
 
-        BasmAST* parse_keyword();
+        bool advance_if(const std::string& data);
+        bool advance_if(unsigned long type);
+        void skip_aesthetic_if(const std::string& data);
     };
 }

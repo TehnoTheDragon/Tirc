@@ -1,28 +1,55 @@
 #pragma once
 #include <vector>
+#include <string>
+#include <memory>
+#include <variant>
 
 namespace basm {
-    enum BasmASTType {
-        NONE,
-        COMPOUND,
-
-        DEF_SECTION,
-        DEF_LABEL,
-        DEF_REGISTER,
-        DEF_VARIABLE,
-
-        PRE_INCLUDE,
-        PRE_IF,
-        PRE_ELIF,
-        PRE_ELSE,
-
-        VAL_STRING,
-        VAL_NUMBER,
+    enum class BASTType {
+        None,
+        Compound,
+        Operation,
+        Name,
+        Value,
     };
 
-    struct BasmAST {
-        BasmASTType type = BasmASTType::NONE;
+    enum class BASTNameType {
+        Label,
+        Register,
+        Varialbe,
+    };
+    
+    enum class BASTValueType {
+        String,
+        Number,
+    };
 
-        explicit BasmAST(BasmASTType type) : type(type) {}
+    struct BASTCompound {
+        std::vector<struct BAST*> children;
+    };
+
+    struct BASTOperation {
+        std::string operation;
+        BASTCompound arguments;
+    };
+
+    struct BASTName {
+        BASTNameType type;
+        std::string name;
+    };
+
+    struct BASTValue {
+        BASTValueType type;
+        std::string value;
+    };
+
+    struct BAST {
+        BASTType type;
+        union {
+            BASTCompound compound;
+            BASTOperation operation;
+            BASTName name;
+            BASTValue value;
+        };
     };
 }
